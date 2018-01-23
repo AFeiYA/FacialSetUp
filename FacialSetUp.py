@@ -1,8 +1,12 @@
 # -*- coding: utf-8 -*-
+#import fit_positon
 
 from maya import cmds
 from maya import mel
 from maya import OpenMayaUI as OMUI
+import os
+from  inspect import getsourcefile
+
 
 try:
     from PySide2.QtCore import *
@@ -16,6 +20,7 @@ except ImportError:
     from PySide.QtUiTools import *
     from shiboken import wrapInstance
 
+
 mayaMainWindowPtr = OMUI.MQtUtil.mainWindow()
 mayaMainWindow = wrapInstance(long(mayaMainWindowPtr), QWidget)
 
@@ -25,20 +30,32 @@ class AIFAE_FacialSetup(QWidget):
         super(AIFAE_FacialSetup, self).__init__(*args, **kwargs)
         self.setParent(mayaMainWindow)
         self.setWindowFlags(Qt.Window)
-        self.setWindowTitle("AIFAE Facial Setup Window")
+        self.setWindowTitle("AI FAE Facial Setup Window")
         self.initUI()
 
     def initUI(self):
         loader = QUiLoader()
-        currentDir = 'F:/QtProject'
-        file = QFile( currentDir+"/createNode.ui")
+        file_path =  os.path.abspath(getsourcefile(lambda : 0)) #获取脚本的绝对路径
+        currentUI = file_path.replace(".py", ".ui")             #获取UI的的绝对路径
+        #print (file_path)
+        file = QFile( currentUI)
         file.open(QFile.ReadOnly)
         self.ui = loader.load(file, parentWidget=self)
 
+        self.ui.createControllerBtn.clicked.connect(self.auto_create_controller)
+        self.ui.fitPositionBtn.clicked.connect(self.fit_position)
         self.ui.parentConstraintBtn.clicked.connect(self.doParentConstraint)
         self.ui.pointConstraintBtn.clicked.connect(self.doPointConstraint)
         self.ui.setDrivenKeyBtn.clicked.connect(self.doSetDrivenKey)
         self.ui.deleteConstraintBtn.clicked.connect(self.doDeleteConstraint)
+        self.ui.parentConstraintBtn_2.clicked.connect(self.doParentConstraint2)
+        self.ui.pointConstraintBtn_2.clicked.connect(self.doPointConstraint2)
+
+    def auto_create_controller(self):
+        print ("Done!")
+
+    def fit_position(self):
+        print ("Fit position done!")
 
     def doParentConstraint(self):  #遍历场景根据名称进行约束
         driverName = self.ui.driverNameLine.text()
@@ -54,7 +71,29 @@ class AIFAE_FacialSetup(QWidget):
     def doPointConstraint(self): #遍历场景根据名称进行约束
         driverName = self.ui.driverNameLine.text()
         drivenName = self.ui.drivenNameLine.text()
-        print  driverName,drivenName
+        print  (driverName,drivenName)
+        transformsObjects = cmds.ls(tr = True)
+        for driverObj in transformsObjects:                                 #遍历场景中的物体
+            if driverName in driverObj:                                     #查找驱动物体
+                drivenObj =  driverObj.replace(driverName,drivenName)       #设置驱动物体名称
+                if cmds.objExists(drivenObj):                               #确认被驱动物体是否存在
+                    #print driverObj,drivenObj
+                    cmds.pointConstraint(driverObj,drivenObj , mo = True)   #约束物体
+    def doParentConstraint2(self):  #遍历场景根据名称进行约束
+        driverName = self.ui.driverNameLineSecond.text()
+        drivenName = self.ui.drivenNameLineSecond.text()
+        print  (driverName, drivenName)
+        transformsObjects = cmds.ls(tr = True)
+        for driverObj in transformsObjects:                                 #遍历场景中的物体
+            if driverName in driverObj:                                     #查找驱动物体
+                drivenObj =  driverObj.replace(driverName,drivenName)       #设置驱动物体名称
+                if cmds.objExists(drivenObj):                               #确认被驱动物体是否存在
+                    cmds.parentConstraint(driverObj, drivenObj , mo = True) #约束物体
+
+    def doPointConstraint2(self): #遍历场景根据名称进行约束
+        driverName = self.ui.driverNameLine.text()
+        drivenName = self.ui.drivenNameLine.text()
+        print  (driverName,drivenName)
         transformsObjects = cmds.ls(tr = True)
         for driverObj in transformsObjects:                                 #遍历场景中的物体
             if driverName in driverObj:                                     #查找驱动物体
@@ -63,6 +102,14 @@ class AIFAE_FacialSetup(QWidget):
                     #print driverObj,drivenObj
                     cmds.pointConstraint(driverObj,drivenObj , mo = True)   #约束物体
 
+    def doDeleteConstraint2(self):  # 遍历场景根据名称进行删除
+        # driverName = self.ui.driverNameLine.text()
+        drivenName = self.ui.drivenNameLineSecond.text()
+        # print  driverName
+        transformsObjects = cmds.ls(tr=True)
+        for obj in transformsObjects:
+            if "Constraint" in obj and drivenName in obj:  # 确认被约束物体
+                cmds.delete(obj)  # 删除约束
     def doDeleteConstraint(self):#遍历场景根据名称进行删除
         #driverName = self.ui.driverNameLine.text()
         drivenName = self.ui.drivenNameLine.text()
@@ -108,11 +155,12 @@ class AIFAE_FacialSetup(QWidget):
         else:
             print ("No object is selected!")
 
+
 def main():
+
     ui = AIFAE_FacialSetup()
     ui.show()
     return ui
-
 
 if __name__ == '__main__':
     main()
