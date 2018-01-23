@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#import fit_position
+
 
 from maya import cmds
 from maya import mel
