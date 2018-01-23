@@ -1,0 +1,126 @@
+<html>
+<head>
+<title>json_tree.py</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css" >
+.ln { color: #f8f8f2; font-weight: normal; font-style: normal;  }
+.s0 { color: rgb(248,248,242); }
+.s1 { color: rgb(249,38,114); }
+.s2 { color: rgb(165,194,97); }
+.s3 { color: rgb(204,120,50); }
+</style>
+</head>
+<BODY BGCOLOR="#272822">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<TR><TD><CENTER>
+<FONT FACE="Arial, Helvetica" COLOR="#000000">
+json_tree.py</FONT>
+</center></TD></TR></TABLE>
+<pre>
+<span class="s0">my_dict </span><span class="s1">= </span><span class="s0">{ 
+  </span><span class="s2">&quot;face_rig&quot;</span><span class="s1">: </span><span class="s0">[ 
+    { </span><span class="s2">&quot;face_constraint&quot;</span><span class="s1">: </span><span class="s2">&quot;face_constraint&quot; </span><span class="s0">}</span><span class="s3">,</span><span class="s0"> 
+    { 
+      </span><span class="s2">&quot;face_ctrl&quot;</span><span class="s1">: </span><span class="s0">[ 
+        { 
+          </span><span class="s2">&quot;ctrl_grp&quot;</span><span class="s1">: </span><span class="s0">[ 
+            { 
+              </span><span class="s2">&quot;jaw_ctrl_locator&quot;</span><span class="s1">: </span><span class="s0">[ 
+                { 
+                  </span><span class="s2">&quot;lowerlip&quot;</span><span class="s1">: </span><span class="s0">[ 
+                    { 
+                      </span><span class="s2">&quot;lowerlip2&quot;</span><span class="s1">: </span><span class="s2">&quot;lowerlip_2_sufaceJoint&quot;</span><span class="s0"> 
+                    } 
+                  ] 
+                } 
+              ] 
+            }</span><span class="s3">,</span><span class="s0"> 
+            { 
+              </span><span class="s2">&quot;lowerEyelid_left_ctrl_locator&quot;</span><span class="s1">: </span><span class="s0">[ 
+                { 
+                  </span><span class="s2">&quot;lowerEyelid_left&quot;</span><span class="s1">: </span><span class="s0">[ 
+                    </span><span class="s2">&quot;lowerEyelid_left_1_bn_ctrl&quot;</span><span class="s3">,</span><span class="s0"> 
+                    </span><span class="s2">&quot;lowerEyelid_left_2_bn_ctrl&quot;</span><span class="s3">,</span><span class="s0"> 
+                    </span><span class="s2">&quot;lowerEyelid_left_3_bn_ctrl&quot;</span><span class="s0"> 
+                  ] 
+                } 
+              ] 
+            }</span><span class="s3">,</span><span class="s0"> 
+            { 
+              </span><span class="s2">&quot;upperEyelid_left_ctrl_locator&quot;</span><span class="s1">: </span><span class="s0">[ 
+                { 
+                  </span><span class="s2">&quot;upperEyelid_left&quot;</span><span class="s1">: </span><span class="s0">[ 
+                    </span><span class="s2">&quot;upperEyelid_left_1_bn_ctrl&quot;</span><span class="s3">,</span><span class="s0"> 
+                    </span><span class="s2">&quot;upperEyelid_left_2_bn_ctrl&quot;</span><span class="s3">,</span><span class="s0"> 
+                    </span><span class="s2">&quot;upperEyelid_left_3_bn_ctrl&quot;</span><span class="s0"> 
+                  ] 
+                } 
+              ] 
+            } 
+          ] 
+        }</span><span class="s3">,</span><span class="s0"> 
+        { 
+          </span><span class="s2">&quot;brows_left&quot;</span><span class="s1">: </span><span class="s0">[ 
+            </span><span class="s2">&quot;brows_left_1_locator&quot;</span><span class="s3">,</span><span class="s0"> 
+            </span><span class="s2">&quot;brows_left_2_locator&quot;</span><span class="s3">,</span><span class="s0"> 
+            </span><span class="s2">&quot;brows_left_3_locator&quot;</span><span class="s0"> 
+          ] 
+        }</span><span class="s3">,</span><span class="s0"> 
+        { 
+          </span><span class="s2">&quot;brows_right&quot;</span><span class="s1">: </span><span class="s0">[ 
+            </span><span class="s2">&quot;brows_right_1_locator&quot;</span><span class="s3">,</span><span class="s0"> 
+            </span><span class="s2">&quot;brows_right_2_locator&quot;</span><span class="s3">,</span><span class="s0"> 
+            </span><span class="s2">&quot;brows_right_3_locator&quot;</span><span class="s0"> 
+          ] 
+        }</span><span class="s3">,</span><span class="s0">
+        { 
+          </span><span class="s2">&quot;mouth_conner&quot;</span><span class="s1">: </span><span class="s0">[ 
+            { 
+              </span><span class="s2">&quot;upperlip&quot;</span><span class="s1">: </span><span class="s2">&quot;upperlip_2_surfaceJoint&quot;</span><span class="s0"> 
+            }</span><span class="s3">,</span><span class="s0"> 
+            { 
+              </span><span class="s2">&quot;mouthCorner_left&quot;</span><span class="s1">: </span><span class="s0">[ 
+                { 
+                  </span><span class="s2">&quot;mouthCorner_left&quot;</span><span class="s1">: </span><span class="s0">[ 
+                    { 
+                      </span><span class="s2">&quot;mouthCorner_left_jaw&quot;</span><span class="s1">: </span><span class="s0">[ 
+                        { 
+                          </span><span class="s2">&quot;mouthCorner_left_ctrl&quot;</span><span class="s1">: </span><span class="s0">[ 
+                            { </span><span class="s2">&quot;mouthCorner_left_locater_grp&quot;</span><span class="s1">: </span><span class="s2">&quot;mouthCorner_left_locater&quot; </span><span class="s0">}</span><span class="s3">,</span><span class="s0"> 
+                            </span><span class="s2">&quot;upperlip_1_sufaceJoint&quot;</span><span class="s3">,</span><span class="s0"> 
+                            </span><span class="s2">&quot;lowerlip_1_sufaceJoint&quot;</span><span class="s0"> 
+                          ] 
+                        } 
+                      ] 
+                    } 
+                  ] 
+                } 
+              ] 
+            }</span><span class="s3">,</span><span class="s0"> 
+            { 
+              </span><span class="s2">&quot;mouthCorner_right&quot;</span><span class="s1">: </span><span class="s0">[ 
+                { 
+                  </span><span class="s2">&quot;mouthCorner_right&quot;</span><span class="s1">: </span><span class="s0">[ 
+                    { 
+                      </span><span class="s2">&quot;mouthCorner_right_jaw&quot;</span><span class="s1">: </span><span class="s0">[ 
+                        { 
+                          </span><span class="s2">&quot;mouthCorner_right_ctrl&quot;</span><span class="s1">: </span><span class="s0">[ 
+                            { </span><span class="s2">&quot;mouthCorner_right_locater_grp&quot;</span><span class="s1">: </span><span class="s2">&quot;mouthCorner_right_locater&quot; </span><span class="s0">}</span><span class="s3">,</span><span class="s0"> 
+                            </span><span class="s2">&quot;upperlip_3_sufaceJoint&quot;</span><span class="s3">,</span><span class="s0"> 
+                            </span><span class="s2">&quot;lowerlip_3_sufaceJoint&quot;</span><span class="s0"> 
+                          ] 
+                        } 
+                      ] 
+                    } 
+                  ] 
+                } 
+              ] 
+            } 
+          ] 
+        } 
+      ] 
+    } 
+  ] 
+}</span></pre>
+</body>
+</html>
