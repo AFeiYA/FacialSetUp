@@ -32,8 +32,8 @@ class AIFAE_FacialSetup(QWidget):
             {"face_constraint": "face_constraint1"},
             {
                 "face_ctrl": [
-                    {"uppEyelid_left_conner": ["lowerEyelid_left_1_bn_ctrl", "lowerEyelid_left_3_bn_ctrl", "upperEyelid_left_1_bn_ctrl", "upperEyelid_left_3_bn_ctrl"]},
-                    {"uppEyelid_right_conner": ["lowerEyelid_right_1_bn_ctrl", "lowerEyelid_right_3_bn_ctrl", "upperEyelid_right_1_bn_ctrl", "upperEyelid_right_3_bn_ctrl"]},
+                    #{"uppEyelid_left_conner": ["lowerEyelid_left_1_bn_ctrl", "lowerEyelid_left_3_bn_ctrl", "upperEyelid_left_1_bn_ctrl", "upperEyelid_left_3_bn_ctrl"]},
+                    #{"uppEyelid_right_conner": ["lowerEyelid_right_1_bn_ctrl", "lowerEyelid_right_3_bn_ctrl", "upperEyelid_right_1_bn_ctrl", "upperEyelid_right_3_bn_ctrl"]},
                     {
                         "ctrl_grp": [
                             {
@@ -54,8 +54,8 @@ class AIFAE_FacialSetup(QWidget):
                                             "lowerEyelid_left_1_bn_ctrl",
                                             "lowerEyelid_left_2_bn_ctrl",
                                             "lowerEyelid_left_3_bn_ctrl",
-                                            "lowerEyelid_left_4_bn_ctrl",
-                                            "lowerEyelid_left_5_bn_ctrl"
+                                            #"lowerEyelid_left_4_bn_ctrl",
+                                            #"lowerEyelid_left_5_bn_ctrl"
                                         ]
                                     }
                                 ]
@@ -67,8 +67,8 @@ class AIFAE_FacialSetup(QWidget):
                                             "lowerEyelid_right_1_bn_ctrl",
                                             "lowerEyelid_right_2_bn_ctrl",
                                             "lowerEyelid_right_3_bn_ctrl",
-                                            "lowerEyelid_right_4_bn_ctrl",
-                                            "lowerEyelid_right_5_bn_ctrl"
+                                            #"lowerEyelid_right_4_bn_ctrl",
+                                            #"lowerEyelid_right_5_bn_ctrl"
                                         ]
                                     }
                                 ]
@@ -80,8 +80,8 @@ class AIFAE_FacialSetup(QWidget):
                                             "upperEyelid_left_1_bn_ctrl",
                                             "upperEyelid_left_2_bn_ctrl",
                                             "upperEyelid_left_3_bn_ctrl",
-                                            "upperEyelid_left_4_bn_ctrl",
-                                            "upperEyelid_left_5_bn_ctrl",
+                                            #"upperEyelid_left_4_bn_ctrl",
+                                            #"upperEyelid_left_5_bn_ctrl",
                                         ]
                                     }
                                 ]
@@ -93,8 +93,8 @@ class AIFAE_FacialSetup(QWidget):
                                             "upperEyelid_right_1_bn_ctrl",
                                             "upperEyelid_right_2_bn_ctrl",
                                             "upperEyelid_right_3_bn_ctrl",
-                                            "upperEyelid_right_4_bn_ctrl",
-                                            "upperEyelid_right_5_bn_ctrl",
+                                            #"upperEyelid_right_4_bn_ctrl",
+                                            #"upperEyelid_right_5_bn_ctrl",
                                         ]
                                     }
                                 ]
@@ -328,6 +328,8 @@ class AIFAE_FacialSetup(QWidget):
             self.set_position(self.move_list)
         else:
             cmds.error("Please create the controllers!")
+        if cmds.objExists('face_ctrl'):
+            cmds.makeIdentity('face_ctrl', apply=True, translate=True, rotate=True)
 
     def doParentConstraint(self):  #遍历场景根据名称进行约束
         driverName = self.ui.driverNameLine.text()
