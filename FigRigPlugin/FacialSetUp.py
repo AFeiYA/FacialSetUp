@@ -407,24 +407,33 @@ class AIFAE_FacialSetup(QWidget):
         minRotateY = self.ui.minSpinBoxY.value()
         midRotateY = self.ui.midSpinBoxY.value()
         maxRotateY = self.ui.maxSpinBoxY.value()
+        txEnabled = self.ui.rotateXenable.isChecked()
+        tyEnabled = self.ui.rotateXenable_2.isChecked()
         #print (minRotateX, midRotateX, maxRotateX, minRotateY, midRotateY, maxRotateY)
         drivers = cmds.ls(sl=True)                                      #选择驱动关键帧的控制器
+        print (txEnabled,tyEnabled)
         if len(drivers)!=0:
             for driver in drivers:
                 drivenObj = driver.replace(driverName, drivenName)      #查找被驱动物体名称
                 if cmds.objExists(drivenObj):                           #如果被驱动物体存在，设置驱动关键帧
-                    cmds.setDrivenKeyframe(drivenObj + ".%s"%drivenAttrA, currentDriver=driver+driverAttrA,
-                                           driverValue=-1, value=minRotateX)
-                    cmds.setDrivenKeyframe(drivenObj + ".%s" % drivenAttrA, currentDriver=driver + driverAttrA,
-                                           driverValue=0, value=midRotateX)
-                    cmds.setDrivenKeyframe(drivenObj + ".%s"%drivenAttrA, currentDriver=driver+driverAttrA,
-                                           driverValue=1, value=maxRotateX)
-                    cmds.setDrivenKeyframe(drivenObj + ".%s"%drivenAttrB, currentDriver=driver+driverAttrB,
-                                           driverValue=-1, value=minRotateY)
-                    cmds.setDrivenKeyframe(drivenObj + ".%s" % drivenAttrB, currentDriver=driver + driverAttrA,
-                                           driverValue=0, value=midRotateY)
-                    cmds.setDrivenKeyframe(drivenObj + ".%s"%drivenAttrB, currentDriver=driver+driverAttrB,
-                                           driverValue=1, value=maxRotateY)
+                    if txEnabled:
+                        cmds.setDrivenKeyframe(drivenObj + ".%s"%drivenAttrA, currentDriver=driver+driverAttrA,
+                                               driverValue=-1, value=minRotateX)
+                        cmds.setDrivenKeyframe(drivenObj + ".%s" % drivenAttrA, currentDriver=driver + driverAttrA,
+                                               driverValue=0, value=midRotateX)
+                        cmds.setDrivenKeyframe(drivenObj + ".%s"%drivenAttrA, currentDriver=driver+driverAttrA,
+                                               driverValue=1, value=maxRotateX)
+                    else:
+                        print ("tx is disabled!")
+                    if tyEnabled:
+                        cmds.setDrivenKeyframe(drivenObj + ".%s"%drivenAttrB, currentDriver=driver+driverAttrB,
+                                               driverValue=-1, value=minRotateY)
+                        cmds.setDrivenKeyframe(drivenObj + ".%s" % drivenAttrB, currentDriver=driver + driverAttrB,
+                                               driverValue=0, value=midRotateY)
+                        cmds.setDrivenKeyframe(drivenObj + ".%s"%drivenAttrB, currentDriver=driver+driverAttrB,
+                                               driverValue=1, value=maxRotateY)
+                    else:
+                        print ("ty is disabled!")
                 else:
                     print ("Your select %s is not exists!"%drivenObj)
         else:
