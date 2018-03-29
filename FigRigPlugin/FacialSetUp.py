@@ -41,7 +41,7 @@ class AIFAE_FacialSetup(QWidget):
                                     {
                                         "lowerlip": [
                                             {
-                                                "lowerlip2": "lowerlip_2_sufaceJoint"
+                                                "lowerlip2": "lowerlip_2_surfaceJoint"
                                             }
                                         ]
                                     }
@@ -131,8 +131,8 @@ class AIFAE_FacialSetup(QWidget):
                                                         "mouthCorner_left_ctrl": [
                                                             {
                                                                 "mouthCorner_left_locator_grp": "mouthCorner_left_locator"},
-                                                            "upperlip_1_sufaceJoint",
-                                                            "lowerlip_1_sufaceJoint"
+                                                            "upperlip_1_surfaceJoint",
+                                                            "lowerlip_1_surfaceJoint"
                                                         ]
                                                     }
                                                 ]
@@ -151,8 +151,8 @@ class AIFAE_FacialSetup(QWidget):
                                                         "mouthCorner_right_ctrl": [
                                                             {
                                                                 "mouthCorner_right_locator_grp": "mouthCorner_right_locator"},
-                                                            "upperlip_3_sufaceJoint",
-                                                            "lowerlip_3_sufaceJoint"
+                                                            "upperlip_3_surfaceJoint",
+                                                            "lowerlip_3_surfaceJoint"
                                                         ]
                                                     }
                                                 ]
@@ -218,22 +218,22 @@ class AIFAE_FacialSetup(QWidget):
                  {"jaw_ctrl_locator": "jaw_ctrl_bn"},
                  {"lowerlip": ""},
                  {"lowerlip_2": ""},
-                 {"lowerlip_2_sufaceJoint": "jaw_1_bn"},
+                 {"lowerlip_2_surfaceJoint": "lowerLip_3_bn"},
                  {"mouth_conner": "jaw_ctrl_bn"},
                  {"upperlip": ""},
-                 {"upperlip_2_surfaceJoint": "jaw_1_bn"},
+                 {"upperlip_2_surfaceJoint": "upperLip_3_bn"},
                  {"mouthCorner_right": "mouthCorner_right_bn"},
                  {"mouthCorner_right_jaw": "jaw_ctrl_bn"},
                  {"mouthCorner_right_ctrl": "mouthCorner_right_bn"},
-                 {"lowerlip_3_sufaceJoint": ""},
-                 {"upperlip_3_sufaceJoint": ""},
+                 {"lowerlip_3_surfaceJoint": ""},
+                 {"upperlip_3_surfaceJoint": ""},
                  {"mouthCorner_right_locater_grp": ""},
                  {"mouthCorner_right_locater": ""},
                  {"mouthCorner_left": "mouthCorner_left_bn"},
                  {"mouthCorner_left_jaw": "jaw_ctrl_bn"},
                  {"mouthCorner_left_ctrl": "mouthCorner_left_bn"},
-                 {"lowerlip_1_sufaceJoint": ""},
-                 {"upperlip_1_sufaceJoint": ""},
+                 {"lowerlip_1_surfaceJoint": ""},
+                 {"upperlip_1_surfaceJoint": ""},
                  {"mouthCorner_left_locater_grp": ""},
                  {"mouthCorner_right_locater": ""}, ]  # 位置信息对位字典
     depth = 1
@@ -334,17 +334,20 @@ class AIFAE_FacialSetup(QWidget):
     def doParentConstraint(self):  #遍历场景根据名称进行约束
         driverName = self.ui.driverNameLine.text()
         drivenName = self.ui.drivenNameLine.text()
+        skip_rotate = self.ui.skipRotateAxis.text()
         print  (driverName, drivenName)
         transformsObjects = cmds.ls(tr = True)
         for driverObj in transformsObjects:                                 #遍历场景中的物体
             if driverName in driverObj:                                     #查找驱动物体
                 drivenObj =  driverObj.replace(driverName,drivenName)       #设置驱动物体名称
                 if cmds.objExists(drivenObj):
-                    cmds.parentConstraint(driverObj, drivenObj , mo = True) #约束物体
+                    cmds.parentConstraint(driverObj, drivenObj , mo = True , sr= skip_rotate.split(" "))
+
 
     def doPointConstraint(self): #遍历场景根据名称进行约束
         driverName = self.ui.driverNameLine.text()
         drivenName = self.ui.drivenNameLine.text()
+        skip_rotate = self.ui.skipRotateAxis.text()
         print  (driverName,drivenName)
         transformsObjects = cmds.ls(tr = True)
         for driverObj in transformsObjects:                                 #遍历场景中的物体
@@ -352,7 +355,7 @@ class AIFAE_FacialSetup(QWidget):
                 drivenObj =  driverObj.replace(driverName,drivenName)       #设置驱动物体名称
                 if cmds.objExists(drivenObj):                               #确认被驱动物体是否存在
                     #print driverObj,drivenObj
-                    cmds.pointConstraint(driverObj,drivenObj , mo = True)   #约束物体
+                    cmds.pointConstraint(driverObj,drivenObj , mo = True, sr= skip_rotate.split(" "))   #约束物体
 
     def doParentConstraint2(self ):  #遍历场景根据名称进行约束
         driverName = self.ui.driverNameLineSecond.text()

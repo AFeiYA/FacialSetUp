@@ -35,7 +35,7 @@
     </size>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>3</number>
    </property>
    <widget class="QWidget" name="tab_2">
     <attribute name="title">
@@ -953,7 +953,7 @@
           </widget>
          </item>
          <item row="2" column="5">
-          <widget class="QCheckBox" name="rotateXenable">
+          <widget class="QCheckBox" name="TXenable">
            <property name="enabled">
             <bool>true</bool>
            </property>
@@ -993,7 +993,7 @@
           </widget>
          </item>
          <item row="4" column="5">
-          <widget class="QCheckBox" name="rotateXenable_2">
+          <widget class="QCheckBox" name="TYenable">
            <property name="enabled">
             <bool>true</bool>
            </property>
