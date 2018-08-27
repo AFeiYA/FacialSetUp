@@ -1,11 +1,16 @@
 # -*- coding: utf-8 -*-
-#import fit_position
 
 from maya import cmds
 from maya import mel
 from maya import OpenMayaUI as OMUI
 import os
 from  inspect import getsourcefile
+import sys, os
+
+file_path =  os.path.abspath(getsourcefile(lambda : 0))
+sys.path.append(file_path.replace(file_path.split('\\')[-1], ""))
+from batch_process import CreateJointsOnSurface
+
 
 
 try:
@@ -246,22 +251,56 @@ class AIFAE_FacialSetup(QWidget):
 
     def initUI(self):
         loader = QUiLoader()
-        file_path =  os.path.abspath(getsourcefile(lambda : 0)) #获取脚本的绝对路径
+        file_path =  os.path.abspath(getsourcefile(lambda : 0))  #获取脚本的绝对路径
         currentUI = file_path.replace(file_path.split('\\')[-1], "FacialSetUp.ui")
-        #currentUI = file_path.replace(".py", ".ui")             #获取UI的的绝对路径
-        print (file_path)
+        #currentUI = file_path.replace(".py", ".ui")              #获取UI的的绝对路径
+        print (u"UI路径：" + currentUI)
         file = QFile( currentUI)
         file.open(QFile.ReadOnly)
         self.ui = loader.load(file, parentWidget=self)
 
-        self.ui.createControllerBtn.clicked.connect(self.auto_create_controller)
-        self.ui.fitPositionBtn.clicked.connect(self.fit_position)
         self.ui.parentConstraintBtn.clicked.connect(self.doParentConstraint)
         self.ui.pointConstraintBtn.clicked.connect(self.doPointConstraint)
         self.ui.setDrivenKeyBtn.clicked.connect(self.doSetDrivenKey)
         self.ui.deleteConstraintBtn.clicked.connect(self.doDeleteConstraint)
         self.ui.parentConstraintBtn_2.clicked.connect(self.doParentConstraint2)
         self.ui.pointConstraintBtn_2.clicked.connect(self.doPointConstraint2)
+
+
+        self.ui.create_joints_btn.clicked.connect(self.batch_create)
+        self.ui.constraint_joints_btn.clicked.connect(self.batch_constraint)
+        self.ui.set_weight_btn.clicked.connect(self.set_weight)
+        self.ui.mirror_weight_btn.clicked.connect(self.mirror_weight)
+        self.c=CreateJointsOnSurface()
+
+    def batch_create(self):
+        name = self.ui.prefix_name.text()
+        dir = self.ui.dir_choice.checkedButton().text()
+        print(name,dir)
+        self.c.create_joints(name=name,dir=dir)
+
+    def batch_constraint(self):
+        control_name_1 = self.ui.control_name_line_1.text()
+        control_name_2 = self.ui.control_name_line_2.text()
+        self.c.batch_constraint(control_name = control_name_1, add_at=True)
+        self.c.batch_constraint(control_name = control_name_2, add_at=False)
+        self.c.set_weight_expression()
+
+    def set_weight(self):
+        weight_choice = self.ui.weight_choice.checkedButton().text()+"_weight"
+        start =  self.ui.spinBox_start_set.value()
+        end =  self.ui.spinBox_end_set.value()
+        print(start, end)
+        str = 'self.c.' + weight_choice + "(start=%s, end=%s)" % (start, end)
+        print(str)
+        eval('self.c.'+weight_choice+"(start=%s, end=%s)"%(start, end))
+
+    def mirror_weight(self):
+        start = self.ui.spinBox_start.value()
+        end = self.ui.spinBox_end.value()
+        axis = self.ui.spinBox_axis.value()
+        self.c.mirror_weight(start=start, end=end, axis=axis)
+
 
     def go_though_dict(self, json_data, path=""):
         #global depth
@@ -441,6 +480,8 @@ class AIFAE_FacialSetup(QWidget):
                     print ("Your select %s is not exists!"%drivenObj)
         else:
             print ("No object is selected!")
+
+
 
 
 def main():
