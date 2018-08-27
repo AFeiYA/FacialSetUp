@@ -205,6 +205,6 @@ class Tail():
 
 
 
-t =  Tail()
-t.create_rig()
+# t =  Tail()
+# t.create_rig()
 
